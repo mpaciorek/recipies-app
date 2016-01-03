@@ -8,3 +8,5 @@
 app/config/parameters.yml
 /.idea
 /node_modules
+/web/css/
+/web/js/

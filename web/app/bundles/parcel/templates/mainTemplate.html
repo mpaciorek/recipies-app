@@ -1,0 +1,26 @@
+<% if (parcels.length) { %>
+
+    <% _.each(parcels.models, function(parcel){ %>
+        <tr>
+            <td>
+                <input type="checkbox" value="<%= parcel.get('parcelCode') %>" />
+            </td>
+
+            <% _.each(headers, function(header) { %>
+                <td><%= parcel.get(header) %></td>
+            <% }); %>
+
+            <td></td>
+        </tr>
+    <% }); %>
+
+<% } else { %>
+
+    <tr>
+        <td colspan="11" class="text-center">
+            <i class="fa fa-inbox"></i>
+        </td>
+    </tr>
+
+<% } %>
+

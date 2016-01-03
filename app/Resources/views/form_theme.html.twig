@@ -1,0 +1,46 @@
+{% extends "bootstrap_3_layout.html.twig" %}
+
+{% block date_widget -%}
+    <div class='input-group datepicker'>
+        {{ parent() }}
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+    </div>
+{%- endblock date_widget %}
+
+{% block checkbox_widget -%}
+    {% spaceless %}
+        <div class="checkbox">
+            <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+            <label for="{{ id }}">{{ label|trans({}, translation_domain) }}</label>
+        </div>
+    {% endspaceless %}
+{%- endblock checkbox_widget %}
+
+{% block js_choice_widget %}
+    {% spaceless %}
+        {% if not expanded %}
+            {%- if required and placeholder is none and not placeholder_in_choices and not multiple -%}
+                {% set required = false %}
+            {%- endif -%}
+            {%- set placeholder = label -%}
+            <div class="form-group">
+                <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+                    {%- if placeholder is not none -%}
+                        <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? placeholder|trans({}, translation_domain) }}</option>
+                    {%- endif -%}
+                    {%- if preferred_choices|length > 0 -%}
+                        {% set options = preferred_choices %}
+                        {{- block('choice_widget_options') -}}
+                        {%- if choices|length > 0 and separator is not none -%}
+                            <option disabled="disabled">{{ separator }}</option>
+                        {%- endif -%}
+                    {%- endif -%}
+                    {%- set options = choices -%}
+                    {{- block('choice_widget_options') -}}
+                </select>
+            </div>
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}

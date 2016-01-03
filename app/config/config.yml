@@ -17,7 +17,7 @@ framework:
         #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_proxies: ~
-    session:         false
+    session:         ~
     fragments:       ~
 
 # Twig Configuration
@@ -30,7 +30,7 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        [ ]
+    bundles:        [ AppBundle ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -78,8 +78,10 @@ fos_rest:
         templating_formats:
             html: true
     format_listener:
+        enabled: true
         rules:
-            - { path: ^/, priorities: [ html, json, xml ], fallback_format: ~, prefer_extension: true }
+            - { path: '^/api', priorities: ['json', 'xml'], fallback_format: json, prefer_extension: false }
+            - { path: '^/', stop: true } # Available for version >= 1.5
         media_type:
             version_regex: '/(v|version)=(?P<version>[0-9\.]+)/'
     exception:
@@ -91,7 +93,7 @@ fos_rest:
     allowed_methods_listener: true
     access_denied_listener:
         json: true
-    body_listener: true
+    body_listener: false
 
 fos_http_cache:
     cache_control:

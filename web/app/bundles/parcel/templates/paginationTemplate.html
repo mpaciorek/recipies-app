@@ -1,0 +1,65 @@
+<%
+    var interval = 4;
+    var start = 1;
+    var end = lastPage;
+    var dimStart = 0;
+    var addEnd = 0;
+    var blank = 0;
+
+    if (currentPage - interval > start) {
+        start = currentPage - interval;
+    } else {
+        addEnd = interval - currentPage + 1;
+    }
+
+    if (currentPage + interval < end) {
+        end = currentPage + interval;
+    } else {
+        dimStart = currentPage + interval - end;
+    }
+
+    end += addEnd;
+
+    if (end <= 0 || end > lastPage) {
+        end = lastPage;
+    }
+
+    start -= dimStart;
+
+    if (start <= 0) {
+        start = 1;
+    }
+
+%>
+
+<% if (totalRecords) { %>
+    <ul class="pagination">
+
+        <% if (currentPage != 1) { %>
+            <li><a href="#" data-page="1"><<</a></li>
+            <li><a href="#" data-page="<%= (currentPage - 1) %>"><</a></li>
+        <% } else { %>
+            <li class="disabled"><a href="#"><<</a></li>
+            <li class="disabled"><a href="#"><</a></li>
+        <% } %>
+
+        <% for (i = start; i <= end; i++) { %>
+
+            <% if (i == currentPage) { %>
+                <li class="active"><a href="#" data-page="<%= i %>"><%= i %></a></li>
+            <% } else { %>
+                <li><a href="#" data-page="<%= i %>"><%= i %></a></li>
+            <% } %>
+
+        <% } %>
+
+        <% if (currentPage != lastPage) { %>
+            <li><a href="#" data-page="<%= (currentPage + 1) %>">></a></li>
+            <li><a href="#" data-page="<%= lastPage %>">>></a></li>
+        <% } else { %>
+            <li class="disabled"><a href="#">></a></li>
+            <li class="disabled"><a href="#">>></a></li>
+        <% } %>
+
+    </ul>
+<% } %>

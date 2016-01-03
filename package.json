@@ -1,0 +1,10 @@
+{
+  "name": "recipies-app",
+  "version": "1.0.0",
+  "devDependencies": {
+    "bower": "^1.7.0"
+  },
+  "scripts": {
+    "postinstall": "./node_modules/bower/bin/bower install"
+  }
+}
